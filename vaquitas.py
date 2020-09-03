@@ -19,7 +19,7 @@ class Vaca(threading.Thread):
     self.posicion += 1
 
   def dibujar(self):
-    print(' ' * self.posicion + 'V')
+    print(' ' * self.posicion + '🐮') # si no funciona, cambiá por 'V' 
 
   def run(self):
     while(True):
@@ -29,7 +29,7 @@ vacas = []
 for i in range(cantVacas):
   v = Vaca()
   vacas.append(v)
-  v.start() # si la clase hereda de Theread, el .start() siempre corre run() de la clase.
+  v.start() # si la clase hereda de Thread, el .start() siempre corre run() de la clase.
 
 def cls():
   os.system('cls' if os.name=='nt' else 'clear')
