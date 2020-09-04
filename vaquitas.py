@@ -2,11 +2,13 @@ import os
 import random
 import time
 import threading
+import sys
 
 inicioPuente = 10
 largoPuente = 20
 
 cantVacas = 5
+vacasQueCruzaron = []
 
 ordenDelPastor = threading.Semaphore()
 
@@ -27,9 +29,11 @@ class Vaca(threading.Thread):
     while(self.posicion != inicioPuente):
       self.avanzar()
     ordenDelPastor.acquire()
+
     while(True):
       if(self.posicion == largoPuente + inicioPuente):
         ordenDelPastor.release()
+        vacasQueCruzaron.append(self)
       self.avanzar()
 
 
@@ -55,3 +59,7 @@ while(True):
     v.dibujar()
   dibujarPuente()
   time.sleep(0.2)
+  if(len(vacasQueCruzaron) == cantVacas):
+        print("Todas las vacas cruzaron el puente.")
+        time.sleep(2)
+        sys.exit()
