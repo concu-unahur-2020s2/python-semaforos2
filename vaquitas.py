@@ -8,6 +8,8 @@ largoPuente = 20
 
 cantVacas = 5
 
+ordenDelPastor = threading.Semaphore()
+
 class Vaca(threading.Thread):
   def __init__(self):
     super().__init__()
@@ -22,8 +24,15 @@ class Vaca(threading.Thread):
     print(' ' * self.posicion + '🐮') # si no funciona, cambiá por 'V' 
 
   def run(self):
-    while(True):
+    while(self.posicion != inicioPuente):
       self.avanzar()
+    ordenDelPastor.acquire()
+    while(True):
+      if(self.posicion == largoPuente):
+        ordenDelPastor.release()
+      self.avanzar()
+
+
 
 vacas = []
 for i in range(cantVacas):
