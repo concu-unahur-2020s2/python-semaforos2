@@ -28,7 +28,7 @@ class Vaca(threading.Thread):
       self.avanzar()
     ordenDelPastor.acquire()
     while(True):
-      if(self.posicion == largoPuente):
+      if(self.posicion == largoPuente + inicioPuente):
         ordenDelPastor.release()
       self.avanzar()
 
