@@ -7,6 +7,9 @@ inicioPuente = 10
 largoPuente = 20
 
 cantVacas = 5
+semaforoInicio= threading.Semaphore(5)
+semaforoLlegada= threading.Semaphore(1)
+
 
 class Vaca(threading.Thread):
   def __init__(self):
@@ -22,9 +25,16 @@ class Vaca(threading.Thread):
     print(' ' * self.posicion + '🐮') # si no funciona, cambiá por 'V' 
 
   def run(self):
-    while(True):
-      self.avanzar()
-
+    semaforoInicio.acquire()
+    try:
+      while(True): 
+        self.avanzar()
+        if(self.posicion ==(inicioPuente-2)):
+          semaforoLlegada.acquire()
+        if(self.posicion == (largoPuente+inicioPuente)):
+          semaforoLlegada.release()
+    finally:
+      semaforoInicio.release()
 vacas = []
 for i in range(cantVacas):
   v = Vaca()
