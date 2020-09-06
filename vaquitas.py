@@ -18,13 +18,23 @@ class Vaca(threading.Thread):
     time.sleep(1-self.velocidad)
     self.posicion += 1
 
+
   def dibujar(self):
     print(' ' * self.posicion + '🐮') # si no funciona, cambiá por 'V' 
 
   def run(self):
-    while(True):
-      self.avanzar()
-
+      while(True): 
+        self.avanzar()
+        while self.posicion == 9:
+          semaforoPuente.acquire()
+          self.avanzar()
+        while self.posicion == 31:
+          semaforoPuente.release()
+          self.avanzar()
+        while self.posicion == 100:
+          self.posicion = 0
+      
+      
 vacas = []
 for i in range(cantVacas):
   v = Vaca()
@@ -36,6 +46,8 @@ def cls():
 
 def dibujarPuente():
   print(' ' * inicioPuente + '=' * largoPuente)
+
+semaforoPuente = threading.Semaphore(1)
 
 while(True):
   cls()
