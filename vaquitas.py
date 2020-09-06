@@ -5,6 +5,7 @@ import threading
 
 inicioPuente = 10
 largoPuente = 20
+mutex = threading.Semaphore(1)
 
 cantVacas = 5
 
@@ -22,8 +23,14 @@ class Vaca(threading.Thread):
     print(' ' * self.posicion + '🐮') # si no funciona, cambiá por 'V' 
 
   def run(self):
-    while(True):
+    global mutex
+    while(self.posicion < largoPuente+inicioPuente+5):
+      if(self.posicion==inicioPuente):
+        mutex.acquire()
       self.avanzar()
+      if(self.posicion==largoPuente+inicioPuente):
+        mutex.release()
+
 
 vacas = []
 for i in range(cantVacas):
