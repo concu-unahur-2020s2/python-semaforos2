@@ -4,11 +4,12 @@ import time
 import threading
 
 inicioPuente = 10
-largoPuente = 40
+largoPuente = 20
 
 cantVacas = 5
+totalVacas = 3   # cantidad de vaquitas que pueden cruzar simultaneamente
 
-semaforoVaca = threading.Semaphore(1)
+semaforoVaca = threading.Semaphore(totalVacas)
 
 
 class Vaca(threading.Thread):
