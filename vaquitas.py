@@ -4,45 +4,57 @@ import time
 import threading
 
 inicioPuente = 10
-largoPuente = 20
+largoPuente = 40
 
-cantVacas = 5
+cantVacas = 3
+
+semaforoVaca = threading.Semaphore(1)
+
 
 class Vaca(threading.Thread):
-  def __init__(self):
-    super().__init__()
-    self.posicion = 0
-    self.velocidad = random.uniform(0.1, 0.9)
+    def __init__(self):
+        super().__init__()
+        self.posicion = 0
+        self.velocidad = random.uniform(0.1, 0.9)
 
-  def avanzar(self):
-    time.sleep(1-self.velocidad)
-    self.posicion += 1
+    def avanzar(self):
+        time.sleep(1 - self.velocidad)
+        self.posicion += 1
 
-  def dibujar(self):
-    print(' ' * self.posicion + '🐮') # si no funciona, cambiá por 'V' 
+    def dibujar(self):
+        print(' ' * self.posicion + 'V')  # si no funciona, cambiá por 'V'
 
-  def run(self):
-    while(True):
-      self.avanzar()
-
+    def run(self):
+        while self.posicion != inicioPuente:
+            self.avanzar()
+        while (True):
+            semaforoVaca.acquire()
+            try:
+                if self.posicion < largoPuente:
+                    self.avanzar()
+            finally:
+                semaforoVaca.release()
 vacas = []
 for i in range(cantVacas):
-  v = Vaca()
-  vacas.append(v)
-  v.start() # si la clase hereda de Thread, el .start() siempre corre run() de la clase.
+    v = Vaca()
+    vacas.append(v)
+    v.start()  # si la clase hereda de Thread, el .start() siempre corre run() de la clase.
+
 
 def cls():
-  os.system('cls' if os.name=='nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def dibujarPuente():
-  print(' ' * inicioPuente + '=' * largoPuente)
+    print(' ' * inicioPuente + '=' * largoPuente)
 
-while(True):
-  cls()
-  print('Apretá Ctrl + C varias veces para salir...')
-  print()
-  dibujarPuente()
-  for v in vacas:
-    v.dibujar()
-  dibujarPuente()
-  time.sleep(0.2)
+
+while (True):
+    cls()
+    print('Apretá Ctrl + C varias veces para salir...')
+    print()
+    dibujarPuente()
+    for v in vacas:
+        v.dibujar()
+    dibujarPuente()
+    time.sleep(0.2)
