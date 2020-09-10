@@ -7,8 +7,9 @@ inicioPuente = 10
 largoPuente = 20
 
 cantVacas = 5
+vacasACruzar = 2 #cantidad de vacas a cruzar
 
-semaforoPuente = threading.Semaphore(1)
+semaforoPuente = threading.Semaphore(vacasACruzar)
 
 class Vaca(threading.Thread):
   def __init__(self):
