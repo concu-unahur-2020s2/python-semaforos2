@@ -6,7 +6,10 @@ import threading
 inicioPuente = 10
 largoPuente = 20
 
-cantVacas = 5
+cantVacas = 20
+
+semaforoDeVacas = threading.Semaphore(1)
+
 
 class Vaca(threading.Thread):
   def __init__(self):
@@ -14,10 +17,15 @@ class Vaca(threading.Thread):
     self.posicion = 0
     self.velocidad = random.uniform(0.1, 0.9)
 
+#esta es la seccion critica del codigo
   def avanzar(self):
     time.sleep(1-self.velocidad)
+    if self.posicion == inicioPuente:
+      semaforoDeVacas.acquire()
     self.posicion += 1
-
+    if self.posicion == (inicioPuente + largoPuente):
+      semaforoDeVacas.release()
+#
   def dibujar(self):
     print(' ' * self.posicion + '🐮') # si no funciona, cambiá por 'V' 
 
@@ -29,6 +37,7 @@ vacas = []
 for i in range(cantVacas):
   v = Vaca()
   vacas.append(v)
+
   v.start() # si la clase hereda de Thread, el .start() siempre corre run() de la clase.
 
 def cls():
