@@ -26,10 +26,10 @@ class Vaca(threading.Thread):
   def run(self):
       while(True): 
         self.avanzar()
-        while self.posicion == 9:
+        while self.posicion == inicioPuente - 2:
           semaforoPuente.acquire()
           self.avanzar()
-        while self.posicion == 31:
+        while self.posicion == inicioPuente + largoPuente + 2:
           semaforoPuente.release()
           self.avanzar()
         while self.posicion == 100:
