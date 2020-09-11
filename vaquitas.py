@@ -6,9 +6,9 @@ import threading
 inicioPuente = 10
 largoPuente = 20
 
-cantVacas = 20
+cantVacas = 5
 
-semaforoDeVacas = threading.Semaphore(1)
+semaforoDeVacas = threading.Lock()
 
 
 class Vaca(threading.Thread):
@@ -26,6 +26,7 @@ class Vaca(threading.Thread):
     if self.posicion == (inicioPuente + largoPuente):
       semaforoDeVacas.release()
 #
+
   def dibujar(self):
     print(' ' * self.posicion + '🐮') # si no funciona, cambiá por 'V' 
 
