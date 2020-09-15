@@ -58,3 +58,7 @@ while(True):
     v.dibujar()
   dibujarPuente()
   time.sleep(0.2)
+  dibujarPuente()
+  for v in vacas:
+    v.dibujar()
+  dibujarPuente()

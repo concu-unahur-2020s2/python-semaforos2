@@ -7,6 +7,7 @@ inicioPuente = 10
 largoPuente = 20
 
 cantVacas = 5
+vacasEnElPuente= int(input("Ingrese la cantidad de vacas que cruzan a la vez: "))
 
 class Vaca(threading.Thread):
   def __init__(self):
@@ -47,7 +48,7 @@ def cls():
 def dibujarPuente():
   print(' ' * inicioPuente + '=' * largoPuente)
 
-semaforoPuente = threading.Semaphore(1)
+semaforoPuente = threading.Semaphore(vacasEnElPuente)
 
 while(True):
   cls()

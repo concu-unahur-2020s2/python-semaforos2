@@ -47,7 +47,7 @@ def cls():
 def dibujarPuente():
   print(' ' * inicioPuente + '=' * largoPuente)
 
-semaforoPuente = threading.Semaphore(1)
+semaforoPuente = threading.Semaphore(2)
 
 while(True):
   cls()
