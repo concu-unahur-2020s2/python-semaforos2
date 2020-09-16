@@ -2,11 +2,16 @@ import os
 import random
 import time
 import threading
+from puente import*
 
 inicioPuente = 10
 largoPuente = 20
 
-semaforo = threading.Semaphore()
+cantACruzar = int(input("cantidad de vacas a cruzar: "))     # cantidad de vacas que pueden cruzar a la vez
+
+semaforo = threading.Semaphore(cantACruzar)
+
+
 cantVacas = 5
 
 class Vaca(threading.Thread):
@@ -43,15 +48,17 @@ for i in range(cantVacas):
 def cls():
   os.system('cls' if os.name=='nt' else 'clear')
 
-def dibujarPuente():
-  print(' ' * inicioPuente + '=' * largoPuente)
+puente1 = Puente(10,20)
+puente2 = Puente(40,10)
+  
 
 while(True):
   cls()
   print('Apretá Ctrl + C varias veces para salir...')
-  print()
-  dibujarPuente()
+  puente1.dibujarPuente()
+  puente2.dibujarPuente()
   for v in vacas:
     v.dibujar()
-  dibujarPuente()
+  puente1.dibujarPuente()
+  puente2.dibujarPuente()
   time.sleep(0.2)
