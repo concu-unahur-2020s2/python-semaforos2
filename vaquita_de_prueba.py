@@ -48,8 +48,8 @@ class Conejo(Animalitos):
 class Puente(threading.Thread):
   def __init__(self):
     super().__init__()
-    self.inicioPuente = 10
-    self.largoPuente = 20
+    self.inicioPuente = inicioPuente
+    self.largoPuente = largoPuente
 
   def dibujarPuente(self):
     print(' ' * inicioPuente + '=' * largoPuente)
