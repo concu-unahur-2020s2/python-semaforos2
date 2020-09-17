@@ -6,7 +6,7 @@ import threading
 inicioPuente = 10
 largoPuente = 20
 
-cantVacas = 5
+cantAnimalitos = 5
 
 semaforoDeAnimalitos = threading.Lock()
 
@@ -40,7 +40,7 @@ class Vaca(Animalitos):
       print(' ' * self.posicion + '🐮') # si no funciona, cambiá por 'V'
 
 
-class Conejo(Animalitos):
+class Liebre(Animalitos):
     def dibujar(self):
       print(' ' * self.posicion + '🐰') # si no funciona, cambiá por 'V'
 
@@ -55,13 +55,16 @@ class Puente(threading.Thread):
     print(' ' * inicioPuente + '=' * largoPuente)
 
 
-vacas = []
-for i in range(cantVacas):
-  v = Vaca()
-  vacas.append(v)
+animalitos = []
+for i in range(cantAnimalitos):
+  a = Vaca()
+  animalitos.append(a)
 
+for i in range(cantAnimalitos):
+  a = Liebre()
+  animalitos.append(a)
 
-  v.start() # si la clase hereda de Thread, el .start() siempre corre run() de la clase.
+  a.start() # si la clase hereda de Thread, el .start() siempre corre run() de la clase.
 
 def cls():
   os.system('cls' if os.name=='nt' else 'clear')
@@ -72,9 +75,10 @@ while(True):
   cls()
   print('Apretá Ctrl + C varias veces para salir...')
   print()
+  print(animalitos)
   puente.dibujarPuente()
-  for v in vacas:
-    v.dibujar()
+  for a in animalitos:
+    a.dibujar()
   puente.dibujarPuente()
   time.sleep(0.2)
 
