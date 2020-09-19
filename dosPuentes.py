@@ -8,7 +8,9 @@ largoPuente = 20
 
 cantVacas = 5
 
+
 semaforoVaca = threading.Semaphore(1)
+semaforoLLegada = threading.Semaphore(0)
 
 class Vaca(threading.Thread):
   def __init__(self):
@@ -22,7 +24,7 @@ class Vaca(threading.Thread):
     
 
   def dibujar(self):
-    print(' ' * self.posicion + 'V') # si no funciona, cambiá por 'V' 
+    print(' ' * self.posicion + 'V') # si no funciona, cambiá por 'V'
 
   def run(self):
     while(True):
@@ -30,9 +32,17 @@ class Vaca(threading.Thread):
       while self.posicion == inicioPuente - 2:
         semaforoVaca.acquire()
         self.avanzar()
-      while self.posicion == inicioPuente + largoPuente + 2:
+      while self.posicion == inicioPuente + largoPuente + 1:
         semaforoVaca.release() 
         self.avanzar()
+      while self.posicion == (largoPuente * 2) + 13 :
+        semaforoLLegada.acquire()
+        semaforoVaca.acquire()
+        self.avanzar()
+        semaforoLLegada.release()
+        semaforoVaca.release()
+  
+     
  
 vacas = []
 for i in range(cantVacas):
@@ -44,13 +54,13 @@ def cls():
   os.system('cls' if os.name=='nt' else 'clear')
 
 def dibujarPuente():
-  print(' ' * inicioPuente + '=' * largoPuente)
+  print(' ' * inicioPuente + '=' * largoPuente + ' ' * 3 + '=' * largoPuente)
+
 
 while(True):
   cls()
   print('Apretá Ctrl + C varias veces para salir...')
   print()
-  dibujarPuente()
   for v in vacas:
     v.dibujar()
   dibujarPuente()
