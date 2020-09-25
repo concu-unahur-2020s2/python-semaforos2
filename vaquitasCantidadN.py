@@ -8,9 +8,11 @@ inicioPuente = 10
 largoPuente = 20
 
 cantVacas = 5
+vacasSimultaneas = int(input("Cantidad de vacas a cruzar simultaneamente: "))
+
 vacasQueCruzaron = []
 
-ordenDelPastor = threading.Semaphore()
+ordenDelPastor = threading.Semaphore(vacasSimultaneas)
 
 class Vaca(threading.Thread):
   def __init__(self):

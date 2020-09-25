@@ -10,7 +10,7 @@ largoPuente = 20
 cantVacas = 5
 vacasQueCruzaron = []
 
-ordenDelPastor = threading.Semaphore()
+ordenDelPastor = threading.Semaphore(2)
 
 class Vaca(threading.Thread):
   def __init__(self):

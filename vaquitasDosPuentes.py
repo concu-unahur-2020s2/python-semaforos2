@@ -3,12 +3,17 @@ import random
 import time
 import threading
 import sys
+from puente import *
 
 inicioPuente = 10
 largoPuente = 20
+inicioPuente2 = 40
+largoPuente2 = 20
+
+puente1 = Puente(inicioPuente, largoPuente)
+puente2 = Puente(inicioPuente2, largoPuente2)
 
 cantVacas = 5
-vacasQueCruzaron = []
 
 ordenDelPastor = threading.Semaphore()
 
@@ -19,13 +24,13 @@ class Vaca(threading.Thread):
     self.velocidad = random.uniform(0.1, 0.9)
 
   def avanzar(self):
-    if (self.posicion == inicioPuente - 1):
+    if ((self.posicion == inicioPuente - 1) or (self.posicion == inicioPuente2 - 1)):
         ordenDelPastor.acquire()
 
     time.sleep(1-self.velocidad)
     self.posicion += 1
 
-    if (self.posicion == inicioPuente + largoPuente):
+    if ((self.posicion == inicioPuente + largoPuente) or (self.posicion == inicioPuente2 + largoPuente2)):
         ordenDelPastor.release()
     
   def dibujar(self):
@@ -46,19 +51,15 @@ for i in range(cantVacas):
 def cls():
   os.system('cls' if os.name=='nt' else 'clear')
 
-def dibujarPuente():
-  print(' ' * inicioPuente + '=' * largoPuente)
 
 while(True):
   cls()
   print('Apretá Ctrl + C varias veces para salir...')
   print()
-  dibujarPuente()
+  puente1.dibujarPuente()
+  puente2.dibujarPuente()
   for v in vacas:
     v.dibujar()
-  dibujarPuente()
+  puente1.dibujarPuente()
+  puente2.dibujarPuente()
   time.sleep(0.2)
-  if(len(vacasQueCruzaron) == cantVacas):
-        print("Todas las vacas cruzaron el puente.")
-        time.sleep(2)
-        sys.exit()
