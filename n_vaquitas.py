@@ -6,9 +6,11 @@ import threading
 inicioPuente = 10
 largoPuente = 20
 
-cantVacas = 5
+cantVacas = 10
+cantVacasSimultaneas = 3
 
-semaforoDeVacas = threading.Lock()
+
+semaforoDeVacas = threading.Semaphore(cantVacasSimultaneas)
 
 
 class Vaca(threading.Thread):

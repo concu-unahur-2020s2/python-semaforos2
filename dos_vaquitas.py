@@ -8,7 +8,7 @@ largoPuente = 20
 
 cantVacas = 5
 
-semaforoDeVacas = threading.Lock()
+semaforoDeVacas = threading.Semaphore(2)
 
 
 class Vaca(threading.Thread):
